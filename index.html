@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lección 17 - Colegio Escolaris</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&family=Verdana:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --orange: #db6015;
+            --yellow: #f7be00;
+            --dark-blue: #244b5a;
+            --brick-red: #993921;
+            --light-blue: #f0f8ff;
+            --white: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Contenedor del libro digital */
+        .book-frame {
+            width: 100%;
+            max-width: 1000px;
+            height: 700px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 2px solid var(--dark-blue);
+        }
+
+        /* Barra de navegación superior */
+        .top-nav {
+            background: var(--dark-blue);
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            border-bottom: 5px solid var(--orange);
+        }
+
+        .nav-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .nav-btn:hover { background-color: rgba(255, 255, 255, 0.25); }
+        .nav-btn.active { background-color: var(--orange); border-color: var(--orange); }
+
+        /* Contenido de las páginas */
+        .page-content {
+            padding: 40px 60px;
+            flex-grow: 1;
+            display: none;
+            overflow-y: auto;
+            animation: fadeIn 0.4s;
+        }
+
+        .page-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1, h2, h3 { color: var(--dark-blue); font-weight: 700; margin-bottom: 20px; }
+        h1 { font-size: 46px; }
+        
+        .slide-title {
+            font-size: 38px;
+            border-left: 10px solid var(--orange);
+            padding-left: 15px;
+            margin-bottom: 30px;
+        }
+
+        p, li { font-size: 22px; line-height: 1.6; color: var(--dark-blue); margin-bottom: 15px; }
+
+        .subtitle { font-size: 26px; color: var(--brick-red); margin-bottom: 20px; font-weight: bold; }
+
+        /* Layouts internos */
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        
+        .image-wrapper {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 4px solid var(--yellow);
+            height: 350px;
+        }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        .bullet-list li {
+            background-color: var(--light-blue);
+            border-radius: 10px;
+            padding: 15px 15px 15px 50px;
+            margin-bottom: 15px;
+            position: relative;
+            list-style: none;
+        }
+        .bullet-list li i { position: absolute; left: 15px; top: 20px; color: var(--orange); }
+
+        .tiled-content { display: flex; gap: 20px; }
+        .tile {
+            flex: 1;
+            background: var(--light-blue);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--orange);
+        }
+        .tile .icon { font-size: 40px; color: var(--brick-red); margin-bottom: 10px; }
+
+        .number-layout { display: flex; justify-content: space-around; align-items: center; }
+        .number-box {
+            background: var(--dark-blue);
+            color: var(--yellow);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 320px;
+        }
+        .number-box .number { font-size: 70px; font-weight: bold; }
+
+        .table-layout table { width: 100%; border-collapse: collapse; }
+        .table-layout th { background: var(--dark-blue); color: var(--yellow); padding: 15px; text-align: left; }
+        .table-layout td { padding: 15px; border-bottom: 1px solid #e2e8f0; }
+        .table-layout tr:nth-child(even) { background: #f8fafc; }
+    </style>
+</head>
+<body>
+
+<div class="book-frame">
+    <div class="top-nav">
+        <button class="nav-btn active" onclick="openPage('p1', this)">Inicio</button>
+        <button class="nav-btn" onclick="openPage('p2', this)">Objetivos</button>
+        <button class="nav-btn" onclick="openPage('p3', this)">Paz</button>
+        <button class="nav-btn" onclick="openPage('p4', this)">Valores</button>
+        <button class="nav-btn" onclick="openPage('p5', this)">Leyes</button>
+        <button class="nav-btn" onclick="openPage('p6', this)">Diversidad</button>
+    </div>
+
+    <div id="p1" class="page-content active">
+        <h1>Normativas y Derechos</h1>
+        <p class="subtitle">Ciencias Sociales | Primero Básico | Colegio Escolaris</p>
+        <div class="two-column" style="margin-top: 30px;">
+            <div class="image-wrapper">
+                <img src="https://picsum.photos/600/400?random=1" alt="Estudiantes">
+            </div>
+            <div>
+                <h3 style="color: var(--brick-red); font-size: 32px;">Colegio Escolaris</h3>
+                <p style="font-size: 28px; font-weight: bold;">"¡Juntos construimos una nación de paz y respeto!"</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="p2" class="page-content">
+        <h2 class="slide-title">Objetivos de Aprendizaje</h2>
+        <div class="bullet-list">
+            <ul>
+                <li><i class="fa-solid fa-star"></i> Identificar las leyes que protegen nuestros derechos como guatemaltecos.</li>
+                <li><i class="fa-solid fa-hand-holding-heart"></i> Definir y valorar la Cultura de Paz en nuestra convivencia.</li>
+                <li><i class="fa-solid fa-people-group"></i> Comprender la importancia de la Interculturalidad.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="p3" class="page-content">
+        <h2 class="slide-title">¿Qué es la Cultura de Paz?</h2>
+        <div class="two-column">
+            <div>
+                <p>Es el conjunto de <strong>valores, actitudes y comportamientos</strong> que reflejan el respeto a la vida, al ser humano y a su dignidad.</p>
+                <p>Su fin es rechazar la violencia y prevenir los conflictos mediante el <strong>diálogo</strong>.</p>
+            </div>
+            <div class="image-wrapper" style="border-radius: 50%; width: 300px; height: 300px; justify-self: center;">
+                <img src="https://picsum.photos/400/400?random=2" alt="Paz">
+            </div>
+        </div>
+    </div>
+
+    <div id="p4" class="page-content">
+        <h2 class="slide-title">Valores Fundamentales</h2>
+        <div class="tiled-content">
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-hands-clapping"></i></div>
+                <h3>Respeto</h3>
+                <p>Reconocer el valor de los demás.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-users-rays"></i></div>
+                <h3>Solidaridad</h3>
+                <p>Apoyarnos mutuamente.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-comments"></i></div>
+                <h3>Diálogo</h3>
+                <p>Resolver diferencias sin violencia.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <h3>Justicia</h3>
+                <p>Equidad para todos.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="p5" class="page-content">
+        <h2 class="slide-title">Normativas y Hitos</h2>
+        <div class="number-layout">
+            <div class="number-box">
+                <div class="number">1985</div>
+                <p style="font-weight: bold; font-size:20px; color:var(--yellow); margin-top:10px;">Constitución Política</p>
+                <p style="color:var(--white); font-size: 18px;">Garantiza derechos y libertades fundamentales.</p>
+            </div>
+            <div class="number-box" style="background: var(--orange);">
+                <div class="number">1996</div>
+                <p style="font-weight: bold; font-size:20px; color:var(--white); margin-top:10px;">Acuerdos de Paz</p>
+                <p style="color:var(--white); font-size: 18px;">Firma de la Paz Firme y Duradera.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="p6" class="page-content">
+        <h2 class="slide-title">Unidad en la Diversidad</h2>
+        <div class="two-column">
+            <div>
+                <p>Guatemala es un país <strong>pluricultural, multiétnico y multilingüe</strong>.</p>
+                <p>Promovemos el aprendizaje mutuo entre culturas:</p>
+                <ul style="margin-left: 20px;">
+                    <li>Maya, Garífuna, Xinka y Ladina.</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://picsum.photos/600/400?random=3" alt="Diversidad">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openPage(pageId, btn) {
+        document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        
+        document.getElementById(pageId).classList.add('active');
+        btn.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
